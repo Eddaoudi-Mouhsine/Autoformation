@@ -26,6 +26,19 @@ return new class extends Migration
             $table->string('name');
             $table->timestamps();
         });
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->timestamps();
+        });
+        Schema::create('category_post', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('category_id');
+            $table->foreign("category_id")->references('id')->on('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('post_id');
+            $table->foreign("post_id")->references('id')->on('posts')->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**
